@@ -210,6 +210,28 @@ const mouseConstraint = MouseConstraint.create(engine, {
 });
 render.mouse = mouse;
 
+// dim target: rgb(112,123,136)
+const rgbTarget = [112, 123, 136];
+const rgbReduceSteps = 24;
+const rgbReduce = rgbTarget.map(rgb => rgb / rgbReduceSteps);
+const dimStartId = '__dimStart';
+function dim(body, dimStart, rgb) {
+    if (body[dimStartId] !== dimStart || rgb.every((val, i) => val === rgbTarget[i])) {
+        return;
+    }
+    // reduce colors by a constant amount
+    const rgbNew = rgb.map((val, i) => Math.max(rgbTarget[i], val-rgbReduce[i]));
+    window.requestAnimationFrame(() => {
+        body.render.fillStyle = `rgb(${rgbNew.join(',')})`;
+        dim(body, dimStart, rgbNew);
+    });
+}
+function flash(body) {
+    body[dimStartId] = +new Date();
+    body.render.fillStyle = '#fff8c7';
+    dim(body, body[dimStartId], [255, 248, 199]);
+}
+
 // sensor events
 let prevSoundTs = 0;
 const soundEffectThreshold = 10; // millis
@@ -225,6 +247,9 @@ Events.on(engine, 'collisionStart', function(event) {
                 playBounceSound();
                 prevSoundTs = ts;
             }
+
+            let peg = pair.bodyA.__isPeg ? pair.bodyA : pair.bodyB;
+            flash(peg);
         }
 
         // detect the winner if chip collides with a sensor
