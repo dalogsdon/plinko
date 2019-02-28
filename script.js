@@ -134,19 +134,19 @@ const rightSide = Body.create({
 Body.rotate(rightSide, Math.PI);
 
 const bottom = [
-    Bodies.rectangle(document.body.clientWidth / 2, 16.2 * s, numSlots * s + 94, 2.5 * s, { // bottom
+    Bodies.rectangle(document.body.clientWidth / 2, 16.2 * s, numSlots * s + s*1.28, 2.5 * s, { // bottom
         isStatic: true,
         render: {
             fillStyle: boardColor
         }
     }),
-    Bodies.rectangle(document.body.clientWidth / 2 - s * (numSlots / 2) - s/2.55, 14.5 * s, s / 2, s, { // bottom left
+    Bodies.rectangle(document.body.clientWidth / 2 - s * (numSlots / 2) - s/2.56, 14.5 * s, s / 2, s, { // bottom left
         isStatic: true,
         render: {
             fillStyle: boardColor
         }
     }),
-    Bodies.rectangle(document.body.clientWidth / 2 + s * (numSlots / 2) + s/2.55, 14.5 * s, s / 2, s, { // bottom right
+    Bodies.rectangle(document.body.clientWidth / 2 + s * (numSlots / 2) + s/2.56, 14.5 * s, s / 2, s, { // bottom right
         isStatic: true,
         render: {
             fillStyle: boardColor
@@ -190,7 +190,7 @@ const walls = [
         isStatic: true
     })
 ];
-const disc = Bodies.circle(document.body.clientWidth / 2 - numSlots/2 * s-30, s * 1.64, s * .357, {
+const disc = Bodies.circle(document.body.clientWidth / 2 - numSlots/2 - s*9.55, s * 1.64, s * .357, {
     restitution: 0.9,
     render: {
         fillStyle: '#1497FF'
