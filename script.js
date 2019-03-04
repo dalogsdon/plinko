@@ -133,7 +133,7 @@ for (let i = 0; i < numSlots-1; i++) { // bottom separators
 
 const sensors = [];
 for (let i = 0; i < numSlots; i++) {
-    const sensor = Bodies.rectangle(leftOffset - s / 2 + s * i, 14.6 * s, s * .8, s * .7, {
+    const sensor = Bodies.rectangle(leftOffset - s / 2 + s * i, 14.6 * s, s * .05, s * .7, {
         isSensor: true,
         isStatic: true,
         render: {
@@ -269,8 +269,11 @@ const names = availableNames.slice(0, numSlots).map((n, i) => {
 
 function clearWinner(i) {
     names[i].classList.remove('winner');
+    window.clearTimeout(winnerTimeout);
 }
 
+let winnerTimeout = null;
 function pickWinner(i) {
     names[i].classList.add('winner');
+    winnerTimeout = window.setTimeout(() => Utils.say(names[i].getAttribute('data-pronounce') + ' is the winner!'), 500);
 }
