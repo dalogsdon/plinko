@@ -1,37 +1,6 @@
-// names as HTML since Matter can't render text
-// https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array
-// https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
-function shuffle(a) {
-    let j, x, i;
-    for (i = a.length - 1; i > 0; i--) {
-        j = Math.floor(Math.random() * (i + 1));
-        x = a[i];
-        a[i] = a[j];
-        a[j] = x;
-    }
-    return a;
-}
-const availableNames = shuffle([
-    'Asim',
-    'Betty',
-    'Bradley',
-    'Brett',
-    'Bryan',
-    'Chris',
-    'Drew',
-    'Dom',
-    'G',
-    'Gregory',
-    'Jesse',
-    'John',
-    'Jordan',
-    'Megan',
-    'Mike',
-    'Rich',
-    'Tyler',
-    'Xiaojun',
-    'Ytalo'
-]);
+import Utils from '/standup/Utils.js';
+
+const availableNames = Utils.names;
 const element = document.querySelector('.canvas');
 const width = element.clientWidth;
 const height = element.clientHeight;
@@ -281,6 +250,7 @@ World.add(engine.world, [...pegs, leftSide, rightSide, ...bottom, ...sensors, di
 Engine.run(engine);
 Render.run(render);
 
+// names as HTML since Matter can't render text
 const names = availableNames.slice(0, numSlots).map((n, i) => {
     const div = document.createElement('div');
     div.classList.add('name');
@@ -291,7 +261,8 @@ const names = availableNames.slice(0, numSlots).map((n, i) => {
     div.style.width = 1.6 * s + 'px';
     div.style.fontSize = s / 3 + 'px';
     div.style.padding = s / 4.5 + 'px';
-    div.innerHTML = n;
+    div.innerHTML = n.value;
+    div.setAttribute('data-pronounce', n.spoken || n.value);
     document.body.append(div);
     return div;
 });
